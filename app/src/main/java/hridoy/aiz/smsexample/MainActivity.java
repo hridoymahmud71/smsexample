@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -51,5 +53,27 @@ public class MainActivity extends AppCompatActivity {
             SmsManager sm = SmsManager.getDefault();
             sm.sendTextMessage(phone,null,text,sent_PI,delivered_PI);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        smsSentReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+            }
+        };
+
+        smsDeliveredReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+            }
+        };
+
+        registerReceiver(smsSentReceiver,new IntentFilter(SENT));
+        registerReceiver(smsDeliveredReceiver,new IntentFilter(DELIVERED));
     }
 }
